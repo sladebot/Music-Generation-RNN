@@ -2,7 +2,7 @@ import tensorflow as tf
 import os
 from model import RNN
 from src.dataloader import DataLoader
-import regex as re
+from player import extract_song_snippet, play_song
 
 num_training_iterations = 2000  # Increase this to train longer
 batch_size = 32  # Experiment between 1 and 64
@@ -12,13 +12,13 @@ learning_rate = 5e-3  # Experiment between 1e-5 and 1e-1
 embedding_dim = 256
 rnn_units = 1024  # Experiment between 1 and 2048
 
-checkpoint_dir = './training_checkpoints'
+checkpoint_dir = '../training_checkpoints'
 checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
 
 
 class Evaluator:
     def __init__(self):
-        dataset_path = os.path.join("data", "irish.abc")
+        dataset_path = os.path.join("../data", "irish.abc")
         dataloader = DataLoader(seq_len=100, batch_size=1, dataset_path=dataset_path)
         vocab = dataloader.get_vocab()
         self.char2idx, self.idx2char = dataloader.get_idx()
@@ -29,8 +29,6 @@ class Evaluator:
         print(model.summary())
         self.model = model
         self.dataloader = dataloader
-
-
 
     def generate_text(self, start_string, generate_length=1000):
         input_eval = [self.char2idx[ch] for ch in start_string]
@@ -49,22 +47,17 @@ class Evaluator:
             input_eval = tf.expand_dims([predicted_id], 0)
             text_generated.append(self.idx2char[predicted_id])
 
-        return (start_string + ''.join(text_generated))
+        return start_string + ''.join(text_generated)
 
-
-def extract_song_snippet(text):
-    pattern = '(^|\n\n)(.*?)\n\n'
-    search_results = re.findall(pattern, text, overlapped=True, flags=re.DOTALL)
-    songs = [song[1] for song in search_results]
-    print("Found {} songs in text".format(len(songs)))
-    return songs
 
 if __name__ == "__main__":
     e = Evaluator()
+    cwd = os.path.dirname(__file__)
     generated_text = e.generate_text("X", generate_length=1000)
+    print(generated_text)
     generated_songs = extract_song_snippet(generated_text)
     for i, song in enumerate(generated_songs):
-        waveform = e.dataloader.play_song(song)
+        waveform = play_song(song)
 
 
 

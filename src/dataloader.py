@@ -54,29 +54,6 @@ class DataLoader:
         y_batch = np.reshape(output_batch, [self.batch_size, self.seq_len])
         return x_batch, y_batch
 
-    def extract_song_snippet(self, text):
-        pattern = '(^|\n\n)(.*?)\n\n'
-        search_results = re.findall(pattern, text, overlapped=True, flags=re.DOTALL)
-        songs = [song[1] for song in search_results]
-        print("Found {} songs in text".format(len(songs)))
-        return songs
-
-    def play_song(self, song):
-        basename = self.save_song_to_abc(song)
-        ret = self.abc2wav(basename + '.abc')
-        if ret == 0:
-            return self.play_wav(basename + '.wav')
-        return None
-
-    def play_wav(self, wav_file):
-        song = AudioSegment.from_wav(wav_file)
-        play(song)
-
-    def abc2wav(self, abc_file):
-        path_to_tool = os.path.join(cwd, 'bin', 'abc2wav')
-        cmd = "{} {}".format(path_to_tool, abc_file)
-        return os.system(cmd)
-
     def save_song_to_abc(self, song, filename="tmp"):
         save_name = "{}.abc".format(filename)
         with open(save_name, "w") as f:

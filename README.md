@@ -9,7 +9,8 @@ We can easily convert a song in ABC notation to an audio waveform and play it ba
 
 ```python
 from src.dataloader import DataLoader
-dataloader = DataLoader(seq_len=100, batch_size=1, dataset_path="src/data")
+
+dataloader = DataLoader(seq_len=100, batch_size=1, dataset_path="data")
 songs = dataloader.load_training_data()
 example_song = songs[0]
 print(example_song)

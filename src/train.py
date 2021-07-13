@@ -13,7 +13,7 @@ learning_rate = 5e-3  # Experiment between 1e-5 and 1e-1
 embedding_dim = 256
 rnn_units = 1024  # Experiment between 1 and 2048
 
-checkpoint_dir = './training_checkpoints'
+checkpoint_dir = '../training_checkpoints'
 checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
 
 
@@ -34,7 +34,7 @@ def compute_loss(labels, logits):
 
 
 def train():
-    dataset_path = os.path.join("data", "irish.abc")
+    dataset_path = os.path.join("../data", "irish.abc")
     dataloader = DataLoader(seq_len=100, batch_size=32, dataset_path=dataset_path)
     vocab = dataloader.get_vocab()
     rnn = RNN(vocab_size=len(vocab), embedding_dim=256, rnn_units=1024, batch_size=32)
