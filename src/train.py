@@ -4,6 +4,9 @@ import numpy as np
 import os
 import tensorflow as tf
 
+from matplotlib.pyplot import plot, draw, show
+
+
 
 num_training_iterations = 2000  # Increase this to train longer
 batch_size = 32  # Experiment between 1 and 64
@@ -39,9 +42,6 @@ def train():
     vocab = dataloader.get_vocab()
     rnn = RNN(vocab_size=len(vocab), embedding_dim=256, rnn_units=1024, batch_size=32)
 
-    char2idx = {u: i for i, u in enumerate(vocab)}
-    idx2char = np.array(vocab)
-
     model = rnn.create()
     model.summary()
     history = []
@@ -54,9 +54,14 @@ def train():
             print(f"Iteration: {iter}, Loss: {loss}")
             model.save_weights(checkpoint_prefix)
             tf.summary.scalar("training loss", loss)
-    print("Finished training.")
+            draw_chart(history)
+    draw_chart(history)
     model.save_weights(checkpoint_prefix)
 
+
+def draw_chart(history):
+    plot(history)
+    show(block=False)
 
 @tf.function
 def train_step(x, y, model, optimizer):

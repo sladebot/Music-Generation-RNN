@@ -123,6 +123,10 @@ embedding_dim = 256
 rnn_units = 1024 
 ```
 
+Training results:
+
+![Training Loss](assets/training_loss.png)
+
 
 ## Prediction
 
