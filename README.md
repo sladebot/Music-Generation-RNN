@@ -144,6 +144,8 @@ The prediction process:
 * At each time step, the updated RNN state is fed back into the model, so that it now has more context in making the next prediction. After predicting the next character, the updated RNN states are again fed back into the model, which is how it learns sequence dependencies in the data, as it gets more information from the previous predictions.
 
 
+Trained model checkpoints - [Link]("https://github.com/sladebot/Music-Generation-RNN/releases/download/0.0.1/training_checkpoints.zip")
+
 ### Credits
 
 * This was an exercise from - [http://introtodeeplearning.com/](http://introtodeeplearning.com/)
