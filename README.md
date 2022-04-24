@@ -150,3 +150,5 @@ Trained model checkpoints - [Link]("https://github.com/sladebot/Music-Generation
 
 * This was an exercise from - [http://introtodeeplearning.com/](http://introtodeeplearning.com/)
 * Jupyter Notebook for exercise - [lab1/Part2_Music_Generation.ipynb](https://github.com/aamini/introtodeeplearning/blob/master/lab1/Part2_Music_Generation.ipynb)
+
+Could you introduce your program? I want to install my local computer.
